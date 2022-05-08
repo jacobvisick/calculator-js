@@ -61,7 +61,7 @@ function equalsListener(event) {
 
         let equation = `${history} ${getOperationSymbol(operation)} ${display}`;
         let result = operate(operation, history, display);
-        if (!isNaN(result) && result.length > 30) result = (Number(result)).toFixed(30);
+        if (!isNaN(result) && result.length > 20) result = (Number(result)).toFixed(20);
         
         historyElement.textContent = equation;
         currentElement.textContent = result;
@@ -120,7 +120,7 @@ function setupListeners() {
 }
 
 function numberPressed(number) {
-    if (display.length > 30) {
+    if (display.length > 20) {
         alert("Woah, that number is too big for me");
         return;
     }
