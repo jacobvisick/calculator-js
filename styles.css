@@ -39,7 +39,7 @@ body {
 }
 
 .button {
-    flex: 1 0 0;
+    flex: 1 1 0;
     border: 1px solid black;
     text-align: center;
     display: flex;
@@ -49,14 +49,7 @@ body {
     box-sizing: border-box;
 }
 
-.clear {
-    flex: 1 1 auto;
-    border: 1px solid black;
-    width: auto;
-    font-size: 24px;
-}
-
-.zero {
+.zero, .clear {
     flex: 0 0 auto;
     margin: 0;
     padding: 0;
