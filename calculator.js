@@ -11,6 +11,10 @@ function multiply (a, b) {
 }
 
 function divide (a, b) {
+    if (b === 0) {
+        return "Dividing by zero may break reality as we know it. This feature has been disabled."
+    }
+
     return a / b;
 }
 
@@ -41,25 +45,11 @@ function getOperationSymbol(operation) {
 }
 
 function numberListener(event) {
-    display += this.textContent;
-    document.querySelector('#display').textContent = display;
+    numberPressed(this.textContent);
 }
 
-function operatorListener(operation) {
-    if (!isInProgress) {
-        isInProgress = true;
-        const historyElement = document.querySelector('#history');
-        const currentElement = document.querySelector('#display');
-
-        historyElement.textContent = currentElement.textContent + ' ' + this.textContent;
-        history = currentElement.textContent;
-        currentElement.textContent = '';
-        display = '';
-        operation = this.id;
-        console.log(operation);
-    } else  {
-        alert("Just two numbers at a time, please");
-    }
+function operatorListener(event) {
+    operatorPressed(this.id);
 }
 
 function equalsListener(event) {
@@ -80,14 +70,26 @@ function equalsListener(event) {
 
 function keyPressListener(event) {
     const key = event.key;
-    if (RegExp('^[0-9]+$').test(key)) {
-        numberListener(null);
-    } else console.log(key);
+    if (RegExp('^[0-9]+$').test(key)) numberPressed(key);
+    else if (key === '+') operatorPressed('add');
+    else if (key === '-') operatorPressed('subtract');
+    else if (key === '/') operatorPressed('divide');
+    else if (key === '*') operatorPressed('multiply');
+    else if (key === 'Enter') equalsListener(undefined);
+    else if (key === 'Backspace') clearListener(undefined);
 }
 
 function clearListener(event) {
     const displayElement = document.querySelector('#display');
     const historyElement = document.querySelector('#history');
+
+    if (!isInProgress) {
+        historyElement.textContent = '';
+        displayElement.textContent = '';
+        display = '';
+        history = '';
+        return;
+    }
 
     if (!displayElement.textContent) {
         historyElement.textContent = '';
@@ -109,7 +111,34 @@ function setupListeners() {
     document.querySelector('.clear').addEventListener('click', clearListener);
     document.querySelector('#equals').addEventListener('click', equalsListener);
     
-    document.addEventListener('keypress', keyPressListener);
+    document.addEventListener('keydown', keyPressListener);
+}
+
+function numberPressed(number) {
+    display += number;
+    document.querySelector('#display').textContent = display;
+}
+
+function operatorPressed(operator) {
+    const historyElement = document.querySelector('#history');
+    const currentElement = document.querySelector('#display');
+
+    if (!currentElement.textContent && operator === 'subtract') {
+        display = '-';
+        currentElement.textContent = display;
+    } else if (!isInProgress) {
+        isInProgress = true;
+
+        historyElement.textContent = currentElement.textContent + ' ' + getOperationSymbol(operator);
+        history = currentElement.textContent;
+        currentElement.textContent = '';
+        display = '';
+        operation = operator;
+    } else {
+        equalsListener(null);
+        isInProgress = false;
+        operatorPressed(operator)
+    }
 }
 
 let display = '';
