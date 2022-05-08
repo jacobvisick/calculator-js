@@ -1,0 +1,64 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+* {
+    user-select: none;
+}
+
+#container, #buttons {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+#display-container {
+    height: 80px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 24px;
+}
+
+#history {
+    height: 30px;
+    font-size: 16px;
+    flex: 1 1 0;
+}
+
+#display {
+    font-size: 24px;
+}
+
+.row, .clear {
+    display: flex;
+    height: 60px;
+}
+
+.button {
+    flex: 1 0 0;
+    border: 1px solid black;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    box-sizing: border-box;
+}
+
+.clear {
+    flex: 1 1 auto;
+    border: 1px solid black;
+    width: auto;
+    font-size: 24px;
+}
+
+.zero {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+}
