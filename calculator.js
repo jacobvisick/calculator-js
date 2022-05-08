@@ -12,7 +12,8 @@ function multiply (a, b) {
 
 function divide (a, b) {
     if (b === 0) {
-        return "Dividing by zero may break reality as we know it. This feature has been disabled."
+        return "Dividing by zero may break reality as we know it." +
+            " For your safety, this feature has been disabled."
     }
 
     return a / b;
@@ -59,8 +60,11 @@ function equalsListener(event) {
 
 
         let equation = `${history} ${getOperationSymbol(operation)} ${display}`;
+        let result = operate(operation, history, display);
+        if (!isNaN(result) && result.length > 30) result = (Number(result)).toFixed(30);
+        
         historyElement.textContent = equation;
-        currentElement.textContent = operate(operation, history, display);
+        currentElement.textContent = result;
 
         history = '';
         display = '';
@@ -71,6 +75,7 @@ function equalsListener(event) {
 function keyPressListener(event) {
     const key = event.key;
     if (RegExp('^[0-9]+$').test(key)) numberPressed(key);
+    else if (key === '.') numberPressed(key);
     else if (key === '+') operatorPressed('add');
     else if (key === '-') operatorPressed('subtract');
     else if (key === '/') operatorPressed('divide');
@@ -115,6 +120,11 @@ function setupListeners() {
 }
 
 function numberPressed(number) {
+    if (display.length > 30) {
+        alert("Woah, that number is too big for me");
+        return;
+    }
+
     display += number;
     document.querySelector('#display').textContent = display;
 }
