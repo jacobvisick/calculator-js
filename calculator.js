@@ -53,6 +53,7 @@ function operatorListener(event) {
 
 function equalsListener(event) {
     if (isInProgress) {
+        isLastInputOperator = false;
         const historyElement = document.querySelector('#history');
         const currentElement = document.querySelector('#display');
 
@@ -85,6 +86,7 @@ function keyPressListener(event) {
 }
 
 function clearListener(event) {
+    isLastInputOperator = false;
     const displayElement = document.querySelector('#display');
     const historyElement = document.querySelector('#history');
 
@@ -125,6 +127,12 @@ function numberPressed(number) {
         return;
     }
 
+    if (number === '.' && display.includes('.')) {
+        return;
+    }
+
+    isLastInputOperator = false;
+
     display += number;
     document.querySelector('#display').textContent = display;
 }
@@ -136,7 +144,10 @@ function operatorPressed(operator) {
     if (!currentElement.textContent && operator === 'subtract') {
         display = '-';
         currentElement.textContent = display;
+    } else if (isLastInputOperator) {
+        return;
     } else if (!isInProgress) {
+        isLastInputOperator = true;
         isInProgress = true;
 
         historyElement.textContent = currentElement.textContent + ' ' + getOperationSymbol(operator);
@@ -154,5 +165,6 @@ function operatorPressed(operator) {
 let display = '';
 let history = '';
 let isInProgress = false;
+let isLastInputOperator = false;
 let operation = '';
 setupListeners();
