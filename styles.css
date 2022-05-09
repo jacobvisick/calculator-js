@@ -73,8 +73,14 @@ body {
 
 .clear {
     border-radius: 0 0 0 10px;
+    background-color: lightcoral;
+}
+
+.operator {
+    background-color: lightgoldenrodyellow;
 }
 
 #equals {
     border-radius: 0 0 10px 0;
+    background-color: white;
 }
