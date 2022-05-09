@@ -12,8 +12,7 @@ function multiply (a, b) {
 
 function divide (a, b) {
     if (b === 0) {
-        return "Dividing by zero may break reality as we know it." +
-            " For your safety, this feature has been disabled."
+        return "Dividing by zero is illegal. Don't."
     }
 
     return a / b;
@@ -62,9 +61,11 @@ function equalsListener(event) {
         let equation = `${history} ${getOperationSymbol(operation)} ${display}`;
         let result = operate(operation, history, display);
         if (!isNaN(result) && result.length > 20) result = (Number(result)).toFixed(20);
+        if (isNaN(result)) history.textContent = '';
         
         historyElement.textContent = equation;
         currentElement.textContent = result;
+        if (isNaN(result)) historyElement.textContent = '';
 
         history = '';
         display = '';
