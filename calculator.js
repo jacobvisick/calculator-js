@@ -15,7 +15,9 @@ function divide (a, b) {
         return "Dividing by zero is illegal. Don't."
     }
 
-    return a / b;
+    result = a / b;
+    if (isNaN(result)) return "Error!";
+    else return result;
 }
 
 function operate(operator, input1, input2) {
