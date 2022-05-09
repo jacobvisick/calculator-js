@@ -31,8 +31,7 @@ function operate(operator, input1, input2) {
     } else if (operator === "divide") {
         return divide(num1, num2);
     } else {
-        alert("error");
-        console.log({operator});
+        alert(`Error! Unknown operator ${operator}`);
     }
 }
 
@@ -81,7 +80,7 @@ function keyPressListener(event) {
     else if (key === '-') operatorPressed('subtract');
     else if (key === '/') operatorPressed('divide');
     else if (key === '*') operatorPressed('multiply');
-    else if (key === 'Enter') equalsListener(undefined);
+    else if (key === 'Enter' || key === '=') equalsListener(undefined);
     else if (key === 'Backspace') clearListener(undefined);
 }
 
